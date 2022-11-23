@@ -14,9 +14,12 @@ class ProductsGrid extends StatelessWidget {
 
     return GridView.builder(
       padding: const EdgeInsets.all(10.0),
-      itemBuilder: (ctx, i) => ChangeNotifierProvider(
-        create: (context) => products[i],
-        child: const ProductItem(
+      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+        // create: (context) => products[i],
+        value: products[
+            i], // builder not update on scrollable builder lists but value updates
+        child: ProductItem(
+          key: ValueKey(products[i].id),
           // products[i].id,
           // products[i].title,
           // products[i].imageUrl,
