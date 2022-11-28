@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/cart_screen.dart';
 import '../widgets/products_grid.dart';
 import '../widgets/badge.dart';
 import '../providers/cart.dart';
@@ -26,6 +27,18 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       appBar: AppBar(
         title: const Text('MyShop'),
         actions: [
+          Consumer<Cart>(
+            builder: (_, cart, ch) => Badge(
+              value: cart.itemCount.toString(),
+              child: ch as Widget,
+            ),
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
+              icon: const Icon(Icons.shopping_cart),
+            ),
+          ),
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
               setState(() {
@@ -46,16 +59,6 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                     child: Text('Show All'),
                   ),
                 ]),
-          ),
-          Consumer<Cart>(
-            builder: (_, cart, ch) => Badge(
-              value: cart.itemCount.toString(),
-              child: ch as Widget,
-            ),
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.shopping_cart),
-            ),
           ),
         ],
       ),
